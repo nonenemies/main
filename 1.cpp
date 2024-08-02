@@ -41,13 +41,22 @@ void truonghop1(string s){
     }
     string ans[s.size()];
     int dem = 0;
-    do{
-        ans[dem] = char(int2 % 26 - 1 + 'A');   
-        int2 = int2 / 26;
-		dem++;                    
-    }while (int2 != 0);
-    for(int i=dem-1;i>=0;--i){
+    if(int2%26!=0){
+    	do{
+    		if(int2==26){
+    			ans[dem]='Z';
+    			break;
+			}
+            ans[dem] = char(int2 % 26 - 1 + 'A');   
+            int2 = int2 / 26;
+		    dem++;           
+        }while (int2 != 0);
+        for(int i=dem;i>=0;--i){
     	cout << ans[i];
+	}
+	}
+	else{
+		cout << char(int2/26-2+'A') << "Z";
 	}
     cout << int1 << endl;
 }
