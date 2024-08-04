@@ -4,98 +4,75 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long long luythua(int a, int b){
-	long long res =1;
-	for(int i=0;i<b;i++){
-		res*=a;
+long long checkeven(long long a, long long b, long long arr[199999]){
+	long long chan = 0;
+	for(long long i=a;i<b;i++){
+		if(arr[i]%2==0){
+			chan++;
+		}
 	}
-	return res;
+	return chan;
 }
-
-bool check(string s){
-	for(int i = 1; i < s.size(); ++i){
-        if(s[i] == 'C' && s[i-1] >= '0' && s[i-1] <= '9' && s[i+1] >= '0' && s[i+1] <= '9'){
-            return true;
-        }
-    }
-    return false;
-}
-
-void truonghop1(string s){
-	int int1 = 0;
-	int int2 = 0;
-	int tmp;
-	for(int i = 1; i < s.size()-1; ++i){ 
-        if(s[i] >= '0' && s[i] <= '9'){
-            int1 = int1 * 10 + (s[i] - '0'); 
-        }
-        else{ 
-        	tmp=i;
-            break;
-        }
-    }
-	for(int i = tmp+1; i < s.size(); ++i){ 
-    	if(s[i] >= '0' && s[i] <= '9'){     
-            int2 = int2 * 10 + (s[i] - '0');
-        }
-    }
-    string ans[s.size()];
-    int dem = 0;
-    if(int2%26!=0){
-    	do{
-    		if(int2==26){
-    			ans[dem]='Z';
-    			break;
+long long demso(long long a, long long arr[199999]){
+	long long chan = 0;
+	long long le = 0;
+	for(long long i=0;i<a;++i){
+		if(arr[i]%2==1){
+			le++;
+		}
+		else{
+			chan++;
+		}
+	}
+	sort(arr,arr+a);
+	long long step = 0;
+	long long i=0;
+	if(le==0||chan==0){
+		return 0;
+	}
+	else if(arr[a-1]%2==1){
+		return chan;
+	}else if(arr[a-1]%2==0){
+		do{
+			if(arr[i]%2==0){
+				for(long long j=a-1;j>=i;--j){
+					if(arr[j]%2==1){
+						arr[i] = arr[i]+arr[j];
+						sort(arr,arr+a);
+						step++;
+						i = 0;
+						break;					
+					}
+					if(j==i){
+						return step+checkeven(i,a,arr)+1;
+					}
+				}
 			}
-            ans[dem] = char(int2 % 26 - 1 + 'A');   
-            int2 = int2 / 26;
-		    dem++;           
-        }while (int2 != 0);
-        for(int i=dem;i>=0;--i){
-    	cout << ans[i];
+			else{
+				i++;
+			}
+		}while(checkeven(0,a,arr)!=0);
 	}
-	}
-	else{
-		cout << char(int2/26-2+'A') << "Z";
-	}
-    cout << int1 << endl;
+	return step;
 }
-
-void truonghop2(string s){
-	int int3 = 0;
-	int int4 = 0;
-	int tmp = 0;
-	int count2 = 0;
-	for (int i = 0; i < s.size(); ++i){
-        if (s[i] >= '0' && s[i] <= '9') {
-            int3 = int3 * 10 + (s[i] - '0'); 
-        }
-        else{
-            tmp = i;    
-        }
-    }
-    for (int i = tmp; i >= 0; --i){    
-        int4 = int4 + int((s[i] - 'A' + 1)) * luythua(26, count2);    
-        count2++;
-    }
-    cout << "R" << int3 << "C" << int4 << endl;
-}
-
 int main(){
 	std::ios::sync_with_stdio(false);
 	cin.tie(NULL);
-	int n;
-	cin >> n;
-	string s[n];
-	for(int i=0;i<n;++i){
-		cin >> s[i];
+	long long a;
+	cin >> a;
+	long long ans[a-1];
+	for(long long i=0;i<a;++i){
+		long long sophantu;
+		cin >> sophantu;
+		long long arr[sophantu-1];
+		for(long long j=0;j<sophantu;++j){
+			cin >> arr[j];
+		}
+		ans[i] = demso(sophantu,arr);
 	}
-	for(int i=0;i<n;++i){
-		if(check(s[i])==true){
-			truonghop1(s[i]);
-		}
-		else{
-			truonghop2(s[i]);
-		}
+	for(long long i=0;i<a;++i){
+		cout << ans[i] << endl;
 	}
 }
+
+
