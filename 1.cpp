@@ -115,7 +115,7 @@ int main(){
 		for(long long j=0;j<sophantu;++j){
 			cin >> arr[j];
 		}
-		ans[i] = demso(sophantu,arr);
+		ans[i] = demso(sophantu,arr); //hàm thực hiện
 	}
 	for(long long i=0;i<a;++i){
 		cout << ans[i] << endl;
