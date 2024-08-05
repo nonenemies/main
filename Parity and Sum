@@ -54,18 +54,18 @@ long long demso(long long a, long long arr[199999]){
 		long long maxle = maxodd(a,arr);
 		long long maxchan = maxeven(a,arr);
 		long long step = 0;
-		long long conlai = demchan;
+		long long chanconlai = demchan;
 		for(long long i=0;i<demchan;++i){
 			if(even[i]<maxle){
 				maxle = maxle+even[i];
 				--conlai;
 			}
 			else{
-				return step+conlai+1;
+				return step+chanconlai+1;
 			}
 			++step;
 			if(maxle>maxchan){
-				return step+conlai;
+				return step+chanconlai;
 			}
 		}	
 	}
