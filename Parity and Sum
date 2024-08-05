@@ -75,7 +75,7 @@ int main(){
 	cin.tie(NULL);
 	long long a;
 	cin >> a;
-	long long ans[a-1];
+	long long ans[a];
 	for(long long i=0;i<a;++i){
 		long long sophantu;
 		cin >> sophantu;
