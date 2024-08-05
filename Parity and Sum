@@ -1,0 +1,91 @@
+#pragma GCC optimize("O3,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+long long maxeven(long long a, long long arr[199999]){
+	long long max = 0;
+	for(long long i=0;i<a;++i){
+		if(arr[i]%2==0&&arr[i]>max){
+			max = arr[i];
+		}
+	}
+	return max;
+}
+
+long long maxodd(long long a, long long arr[199999]){
+	long long max = 0;
+	for(long long i=0;i<a;++i){
+		if(arr[i]%2==1&&arr[i]>max){
+			max = arr[i];
+		}
+	}
+	return max;
+}
+long long demso(long long a, long long arr[199999]){
+	long long chan = 0;
+	long long le = 0;
+	for(long long i=0;i<a;++i){
+		if(arr[i]%2==1){
+			le++;
+		}
+		else{
+			chan++;
+		}
+	}
+	long long step = 0;
+	if(le==0||chan==0){
+		return 0;
+	}
+	else if(maxodd(a,arr)>maxeven(a,arr)){
+		return chan;
+	}else if(maxodd(a,arr)<maxeven(a,arr)){
+		long long even[a];
+		long long demchan = 0;
+		for(long long i=0;i<a;++i){
+			if(arr[i]%2==0){
+				even[demchan]=arr[i];
+				++demchan;
+			}
+		}
+		sort(even,even+demchan);
+		long long maxle = maxodd(a,arr);
+		long long maxchan = maxeven(a,arr);
+		long long step = 0;
+		long long conlai = demchan;
+		for(long long i=0;i<demchan;++i){
+			if(even[i]<maxle){
+				maxle = maxle+even[i];
+				--conlai;
+			}
+			else{
+				return step+conlai+1;
+			}
+			++step;
+			if(maxle>maxchan){
+				return step+conlai;
+			}
+		}	
+	}
+}
+int main(){
+	std::ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	long long a;
+	cin >> a;
+	long long ans[a-1];
+	for(long long i=0;i<a;++i){
+		long long sophantu;
+		cin >> sophantu;
+		long long arr[sophantu+1];
+		for(long long j=0;j<sophantu;++j){
+			cin >> arr[j];
+		}
+		ans[i] = demso(sophantu,arr);
+	}
+	for(long long i=0;i<a;++i){
+		cout << ans[i] << endl;
+	}
+}
