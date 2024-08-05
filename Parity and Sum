@@ -58,7 +58,7 @@ long long demso(long long a, long long arr[199999]){
 		for(long long i=0;i<demchan;++i){
 			if(even[i]<maxle){
 				maxle = maxle+even[i];
-				--conlai;
+				--chanconlai;
 			}
 			else{
 				return step+chanconlai+1;
