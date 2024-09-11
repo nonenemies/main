@@ -1,3 +1,21 @@
+02ecf-73388
+d7c66-049e9
+69072-32aec
+213a3-4eb5c
+659ba-ca656
+a2f0d-9dc7d
+f6bc2-d6bac
+2af2c-49769
+d539f-b2152
+e8e11-b3580
+adf8a-8a0ca
+3e972-e3ea4
+a3159-d6880
+97063-4ad83
+7512b-f2580
+03f3e-28b7a
+
+
 #pragma GCC optimize("O3,unroll-loops")
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 
