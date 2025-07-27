@@ -1,0 +1,52 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+bool cmp(const string& a, const string& b) {
+	if (a.size() != b.size()) return a.size() < b.size();
+	return a < b;
+}
+
+void solve() {
+	int n;
+	cin >> n;
+	vector<string> num(501);
+	int count = 0;
+	while (n--){
+		string s;
+		cin >> s;
+		for (int i = 0; i <= s.size(); ++i) {
+			if (i < s.size() && isdigit(s[i])) {
+				num[count] += s[i];
+			} else {
+				if (!num[count].empty()) {
+					++count;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < count; ++i) {
+		int j = 0;
+		while (j < num[i].size() && num[i][j] == '0') {
+			j++;
+		}
+		num[i] = num[i].substr(j);
+		if (num[i].empty()) num[i] = "0";
+	}
+	sort(num.begin(), num.end(), cmp);
+	for (int i = 0; i < num.size(); ++i) {
+		if (num[i][0]!='\0') {
+			cout << num[i] << endl;
+		}
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	//int t; cin >> t; while(t--) {solve();}
+	solve();
+	return 0;
+}
