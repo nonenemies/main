@@ -1,45 +1,40 @@
 #include<iostream>
 #include<algorithm>
+#include<vector>
 using namespace std;
+
+#define ll long long
+
 int main()
 {
-	freopen("KNAPSACK.inp","r",stdin);
-    freopen("KNAPSACK.out","w",stdout);
-	long long n;
-	cin >> n;
-	long long C;
-	cin >> C;
-	long long items[n+1];
-	long long weight[n+1];
-	long long i;
-	for(i=0;i<n;i++)
-	{
-		cin >> weight[i] >> items[i];
-	}
-	long long maxvalue[n+1][C+1];
-	long long mondo;
-	long long trongluong;
-	long long hientai;
-	for(mondo = 0;mondo<=n;mondo++)
-	{
-		hientai=mondo-1;
-		for(trongluong=0;trongluong<=C;trongluong++)
-		{
-			if(mondo==0||trongluong==0)
-			{
-				maxvalue[mondo][trongluong]=0;
+	int n, price;
+    cin >> n >> price;
+	vector<ll> books(n+1, 0);
+    vector<ll> pages(n+1, 0);
+	for(int i = 0;i < n;++i){
+        cin >> books[i];
+    }
+    for(int i = 0;i < n;++i){
+        cin >> pages[i];
+    }
+	vector<vector<ll>> dp(n+1, vector<ll>(price + 1, 0));
+	for(ll bookvalue = 0; bookvalue <= n; ++bookvalue){
+		for(ll cost = 0; cost <= price; ++cost){
+			if(bookvalue==0||cost==0){
+				dp[bookvalue][cost]=0;
+                continue;
 			}
-			else if(weight[hientai]>trongluong)
-			{
-				maxvalue[mondo][trongluong] = maxvalue[mondo-1][trongluong];
+            ll hientai = bookvalue - 1;
+			if(books[hientai] > cost){
+				dp[bookvalue][cost] = dp[bookvalue-1][cost];
 			}
 			else 
 			{
-				long long neulaymondo = items[hientai] + maxvalue[mondo-1][trongluong-weight[hientai]];
-				long long neukolaymondo = maxvalue[mondo-1][trongluong];
-				maxvalue[mondo][trongluong] = max(neulaymondo,neukolaymondo);
+				long long iftake = pages[hientai] + dp[bookvalue-1][cost - books[hientai]];
+				long long ifnotake = dp[bookvalue-1][cost];
+				dp[bookvalue][cost] = max(iftake,ifnotake);
 			}
 		}
 	}
-	cout << maxvalue[n][C];
+	cout << dp[n][price];
 }
