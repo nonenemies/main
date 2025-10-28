@@ -1,40 +1,26 @@
-#include<iostream>
-#include<algorithm>
-#include<vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 #define ll long long
 
-int main()
-{
-	int n, price;
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, price;
     cin >> n >> price;
-	vector<ll> books(n+1, 0);
-    vector<ll> pages(n+1, 0);
-	for(int i = 0;i < n;++i){
-        cin >> books[i];
+
+    vector<int> cost(n);
+    vector<int> pages(n);
+    for (int i = 0; i < n; i++) cin >> cost[i];
+    for (int i = 0; i < n; i++) cin >> pages[i];
+
+    vector<ll> dp(price + 1, 0);
+
+    for (int i = 0; i < n; i++) {
+        for (int c = price; c >= cost[i]; c--) {
+            dp[c] = max(dp[c], dp[c - cost[i]] + pages[i]);
+        }
     }
-    for(int i = 0;i < n;++i){
-        cin >> pages[i];
-    }
-	vector<vector<ll>> dp(n+1, vector<ll>(price + 1, 0));
-	for(ll bookvalue = 0; bookvalue <= n; ++bookvalue){
-		for(ll cost = 0; cost <= price; ++cost){
-			if(bookvalue==0||cost==0){
-				dp[bookvalue][cost]=0;
-                continue;
-			}
-            ll hientai = bookvalue - 1;
-			if(books[hientai] > cost){
-				dp[bookvalue][cost] = dp[bookvalue-1][cost];
-			}
-			else 
-			{
-				long long iftake = pages[hientai] + dp[bookvalue-1][cost - books[hientai]];
-				long long ifnotake = dp[bookvalue-1][cost];
-				dp[bookvalue][cost] = max(iftake,ifnotake);
-			}
-		}
-	}
-	cout << dp[n][price];
+    cout << dp[price];
 }
